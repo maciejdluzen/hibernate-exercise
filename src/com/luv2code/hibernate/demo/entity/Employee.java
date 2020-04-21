@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="employee")
+@Table(name="Employee")
 public class Employee {
 
 	@Id
@@ -57,8 +57,8 @@ public class Employee {
 		this.id = id;
 	}
 
-	public Employee(int id, String first_name, String last_name, String company) {
-		this.id = id;
+	public Employee(String first_name, String last_name, String company) {
+
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.company = company;
@@ -67,6 +67,7 @@ public class Employee {
 	public Employee() {
 		
 	}
+
 
 	@Override
 	public String toString() {
