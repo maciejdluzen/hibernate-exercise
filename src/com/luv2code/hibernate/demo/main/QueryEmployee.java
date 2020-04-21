@@ -1,41 +1,41 @@
 package com.luv2code.hibernate.demo.main;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.luv2code.hibernate.demo.entity.Employee;
 
-public class CreateEmployee {
+public class QueryEmployee {
 
 	public static void main(String[] args) {
 		
 		SessionFactory factory = new Configuration()
-									.configure("hibernate.cfg.xml")
-									.addAnnotatedClass(Employee.class)
-									.buildSessionFactory();
-		
+				.configure("hibernate.cfg.xml")
+				.addAnnotatedClass(Employee.class)
+				.buildSessionFactory();
+
 		Session session = factory.getCurrentSession();
 		
 		try {
 			
-			System.out.println("Creating new employee object...");
-			
-			Employee employee1 = new Employee("Kacper", "Kowalski", "Capgemini");
-			
 			session.beginTransaction();
 			
-			System.out.println("Saving the employee...");
+			List<Employee> employees = session.createQuery("from Employee e where e.company = 'Capgemini'").getResultList();
 			
-			session.save(employee1);
+			displayEmployees(employees);
 			
 			session.getTransaction().commit();
 			
-			System.out.println("Done!");
-			
 		} finally {
-			
-			factory.close();
+			session.close();
 		}
 	}
+
+	private static void displayEmployees(List<Employee> employees) {
+		employees.forEach(employee -> System.out.println(employee));
+	}
+
 }

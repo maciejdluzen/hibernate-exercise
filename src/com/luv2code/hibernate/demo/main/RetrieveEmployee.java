@@ -6,36 +6,32 @@ import org.hibernate.cfg.Configuration;
 
 import com.luv2code.hibernate.demo.entity.Employee;
 
-public class CreateEmployee {
+public class RetrieveEmployee {
 
 	public static void main(String[] args) {
 		
 		SessionFactory factory = new Configuration()
-									.configure("hibernate.cfg.xml")
-									.addAnnotatedClass(Employee.class)
-									.buildSessionFactory();
-		
+				.configure("hibernate.cfg.xml")
+				.addAnnotatedClass(Employee.class)
+				.buildSessionFactory();
+
 		Session session = factory.getCurrentSession();
 		
 		try {
 			
-			System.out.println("Creating new employee object...");
-			
-			Employee employee1 = new Employee("Kacper", "Kowalski", "Capgemini");
-			
+			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			System.out.println("Saving the employee...");
+			Employee employee = session.get(Employee.class, 1);
 			
-			session.save(employee1);
+			System.out.println("Retrieved employee " + employee);
 			
 			session.getTransaction().commit();
-			
-			System.out.println("Done!");
-			
+				
 		} finally {
-			
-			factory.close();
+			session.close();
 		}
+
 	}
+
 }
