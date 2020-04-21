@@ -19,13 +19,19 @@ public class CreateEmployee {
 		
 		try {
 			
+			System.out.println("Creating new employee object...");
+			
 			Employee employee1 = new Employee("Maciej", "Dluzen", "Capgemini");
 			
 			session.beginTransaction();
 			
+			System.out.println("Saving the employee...");
+			
 			session.save(employee1);
 			
 			session.getTransaction().commit();
+			
+			System.out.println("Done!");
 			
 		} finally {
 			
